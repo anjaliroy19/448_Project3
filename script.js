@@ -7,7 +7,7 @@ var dy;
 let wallLeftPos = 0; // these will need to be changed based on game layout
 let wallRightPos = 1500; //^^
 let wallTopPos = 0; //^^
-let posPaddle;
+let posPaddle; //Center X position for paddle
 let row = 3;
 let col = 7;
 let width = 200;
@@ -46,7 +46,6 @@ function drawBall(posX, posY){
     context.arc(posX,posY,10,0, Math.PI*2, true);
     context.closePath();
     context.fill();
-    //hitPaddle(); 
 }
 
 function setDxDy(){
@@ -101,14 +100,14 @@ function hitDetect(){
 
 function drawPaddle() {
   let posR = posPaddle;
-  if(posR => 50 && posR <= 1450) {
+  if(posR => 50 && posR <= 1450) { //Paddle movements within the game border 
     context.beginPath();
     context.fillStyle = 'Blue';
     context.fillRect(posR-50, 550, 100, 10);
     context.closePath();
     console.log(posR);
   }
-  if(posR < 50) {
+  if(posR < 50) { //For reft side border case
     posPaddle=50;
     context.beginPath();
     context.fillStyle = 'Blue';
@@ -116,7 +115,7 @@ function drawPaddle() {
     context.closePath();
     console.log(posR);
   }
-  if(posR > 1450) {
+  if(posR > 1450) { //For right side border case
     posPaddle=1450;
     context.beginPath();
     context.fillStyle = 'Blue';
@@ -128,7 +127,7 @@ function drawPaddle() {
 }
 
 function hitPaddle() {
-  if((y == 550) && (x > posPaddle-50) && (x < posPaddle+50)) {
+  if((y == 550) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
     console.log("paddleHit");
     dy = -dy;
   }
