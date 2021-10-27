@@ -5,10 +5,16 @@ var y;
 var dx;
 var dy;
 let wallLeftPos = 0; // these will need to be changed based on game layout
-let wallRightPos = 800; //^^
+let wallRightPos = 1500; //^^
 let wallTopPos = 0; //^^
 
-
+let row = 3;
+let col = 7;
+let width = 200;
+let height = 50;
+let bricks = []
+let spaceX = 5
+let spaceY = 5
 
 
 function start(){
@@ -16,11 +22,14 @@ function start(){
     y = 400;//^^
     dx = 1;
     dy = -1;
+    makeBricks();
     setInterval(moveBall,5); //calls gameLoop() every 5 ms
 }
 
 function moveBall(){
     drawBall(x,y);
+    drawBricks();
+    hitDetect();
     setDxDy();
     x = x + dx;
     y = y + dy;
@@ -40,8 +49,48 @@ function setDxDy(){
     if (x <= wallLeftPos || x >= wallRightPos){
         dx = -dx;
     }
-    if (y <= wallTopPos){
+    if (y <= wallTopPos || y > 400){ //made a bottom border for testing - remove when adding paddle
         dy = -dy;
+    }
+}
+
+function makeBricks(){
+    for(let i = 0; i < col; i++){
+        bricks[i] = []
+        for(let j = 0; j < row; j++){
+            bricks[i][j] = { x: 0, y: 0, on: 'yes'}
+            bricks[i][j].x = i * (width + spaceX)
+            bricks[i][j].y = j * (height + spaceY)
+        }
+    }
+}
+
+function drawBricks(){
+    for(let i = 0; i < col; i++){
+        for(let j = 0; j < row; j++){
+            if(bricks[i][j].on == 'yes'){
+                context.beginPath();
+                context.fillStyle = "white";
+                context.rect(bricks[i][j].x, bricks[i][j].y, width, height);
+                context.closePath(); 
+                context.fill(); 
+            }          
+        }
+    }
+    //console.log(bricks)
+}
+
+function hitDetect(){
+    for(let i = 0; i < col; i++){
+        for(let j = 0; j < row; j++){
+            if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height){
+                console.log('hit')
+                context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
+                dy = -dy
+                bricks[i][j].on = 'no'
+                //need to remove bricks from array
+            }
+        }
     }
 }
 
