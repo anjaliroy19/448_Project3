@@ -83,7 +83,7 @@ function drawBricks(){
 function hitDetect(){
     for(let i = 0; i < col; i++){
         for(let j = 0; j < row; j++){
-            if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height){
+            if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height && bricks[i][j].on == 'yes'){
                 console.log('hit')
                 context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                 dy = -dy
