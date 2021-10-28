@@ -7,7 +7,7 @@ var dy;
 let wallLeftPos = 0; // these will need to be changed based on game layout
 let wallRightPos = 1500; //^^
 let wallTopPos = 0; //^^
-let posPaddle; //Center X position for paddle
+let posPaddle = 750; //Center X position for paddle
 let row = 3;
 let col = 7;
 let width = 200;
@@ -19,13 +19,21 @@ let spaceY = 5
 document.addEventListener('mousemove', e => { 
     posPaddle = e.clientX;
 });
+document.addEventListener("click", start);
+
+
+function setup(){
+    drawBall(750,540);
+    makeBricks();
+    drawBricks();
+    drawPaddle(posPaddle);
+}
 
 function start(){
-    x = 600;//change this to be at position above paddle
-    y = 400;//^^
+    x = 750;//change this to be at position above paddle
+    y = 500;//^^
     dx = 1;
     dy = -1;
-    makeBricks();
     setInterval(moveBall,5); //calls gameLoop() every 5 ms
 }
 
@@ -107,7 +115,7 @@ function drawPaddle() {
     context.closePath();
     console.log(posR);
   }
-  if(posR < 50) { //For reft side border case
+  if(posR < 50) { //For left side border case
     posPaddle=50;
     context.beginPath();
     context.fillStyle = 'Blue';
