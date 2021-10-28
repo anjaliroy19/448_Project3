@@ -15,6 +15,7 @@ let height = 50;
 let bricks = []
 let spaceX = 5
 let spaceY = 5
+let score = 0;
 
 document.addEventListener('mousemove', e => { 
     posPaddle = e.clientX;
@@ -64,7 +65,17 @@ function setDxDy(){
     if (y <= wallTopPos || y > 600){ //made a bottom border for testing - remove when adding paddle
         dy = -dy;
     }
+    if (y > 600){
+        gameOver();
+    }
 }
+
+function gameOver(){
+    //later add an image
+    window.alert("Game over! You scored: " + score + " point(s)");
+    location.reload();
+}
+
 
 function makeBricks(){
     for(let i = 0; i < col; i++){
@@ -97,6 +108,8 @@ function hitDetect(){
         for(let j = 0; j < row; j++){
             if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height && bricks[i][j].on == 'yes'){
                 console.log('hit')
+                score++;
+                updateScoreBoard(score);
                 context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                 dy = -dy
                 bricks[i][j].on = 'no'
@@ -142,8 +155,15 @@ function hitPaddle() {
 
 }
 
+
+function updateScoreBoard(score){
+	document.getElementById("score").innerHTML = "Score: " + score;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     canvas = document.querySelector("#projectCanvas");
     context = canvas.getContext("2d");
   })
+
+
 
