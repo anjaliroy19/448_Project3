@@ -96,7 +96,7 @@ function drawBricks(){
         for(let j = 0; j < row; j++){
             if(bricks[i][j].on == 'yes'){
                 context.beginPath();
-                context.fillStyle = "white";
+                context.fillStyle = "gray";
                 context.rect(bricks[i][j].x, bricks[i][j].y, width, height);
                 context.closePath(); 
                 context.fill(); 
