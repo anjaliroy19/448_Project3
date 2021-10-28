@@ -13,8 +13,12 @@ Project Description:
   >If the ball touches the bottom of the screen instead of the paddle, the game will automatically end. 
 
 Contributors
-  > Anjali Roy
-  > Kaityln Esson
-  > Cooper Fine
-  > Josh Goldstein
-  > Tristian Niles
+  > ~Anjali Roy
+  > 
+  > ~Kaityln Esson
+  > 
+  > ~Cooper Fine
+  > 
+  > ~Josh Goldstein
+  > 
+  > ~Tristian Niles
