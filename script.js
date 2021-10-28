@@ -13,6 +13,7 @@ let col = 7;
 let width = 200;
 let height = 50;
 let bricks = []
+let brickTotal = row*col; //Using for if all bricks are destroyed
 let spaceX = 5
 let spaceY = 5
 let score = 0;
@@ -115,6 +116,7 @@ function hitDetect(){
                 context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                 dy = -dy
                 bricks[i][j].on = 'no'
+		if(score == brickTotal) {gameOver();} //If equal all bricks are destroyed.
                 //need to remove bricks from array
             }
         }
