@@ -2,11 +2,11 @@ let canvas;
 var context;
 var x;
 var y;
-var dx;
-var dy;
-let wallLeftPos = 0; // these will need to be changed based on game layout
-let wallRightPos = 1500; //^^
-let wallTopPos = 0; //^^
+var dx=0;
+var dy=0;
+let wallLeftPos; 
+let wallRightPos; 
+let wallTopPos;
 let posPaddle = 750; //Center X position for paddle
 let row = 3;
 let col = 7;
@@ -31,11 +31,13 @@ function setup(){
 }
 
 function start(){
-    x = 750;//change this to be at position above paddle
-    y = 500;//^^
-    dx = 1;
-    dy = -1;
-    setInterval(moveBall,5); //calls gameLoop() every 5 ms
+    if (dx == 0 && dy == 0) {
+      x = 750;//change this to be at position above paddle
+      y = 500;//^^
+      dx = 1;
+      dy = -1;
+      setInterval(moveBall,5); //calls gameLoop() every 5 ms
+    }
 }
 
 function moveBall(){
@@ -62,7 +64,7 @@ function setDxDy(){
     if (x <= wallLeftPos || x >= wallRightPos){
         dx = -dx;
     }
-    if (y <= wallTopPos || y > 600){ //made a bottom border for testing - remove when adding paddle
+    if (y <= 0 || y > 600){ //made a bottom border for testing - remove when adding paddle
         dy = -dy;
     }
     if (y > 600){
@@ -121,26 +123,26 @@ function hitDetect(){
 
 function drawPaddle() {
   let posR = posPaddle;
-  if(posR => 50 && posR <= 1450) { //Paddle movements within the game border 
+  if(posR => wallLeftPos && posR <= wallRightPos) { //Paddle movements within the game border 
     context.beginPath();
     context.fillStyle = 'Blue';
     context.fillRect(posR-50, 550, 100, 10);
     context.closePath();
     console.log(posR);
   }
-  if(posR < 50) { //For left side border case
-    posPaddle=50;
+  if(posR < wallLeftPos + 50) { //For left side border case
+    posPaddle=wallLeftPos + 50;
     context.beginPath();
     context.fillStyle = 'Blue';
-    context.fillRect(0, 550, 100, 10);
+    context.fillRect(wallLeftPos, 550, 100, 10);
     context.closePath();
     console.log(posR);
   }
-  if(posR > 1450) { //For right side border case
-    posPaddle=1450;
+  if(posR > wallRightPos - 50) { //For right side border case
+    posPaddle=wallRightPos - 50;
     context.beginPath();
     context.fillStyle = 'Blue';
-    context.fillRect(1400, 550, 100, 10);
+    context.fillRect(wallRightPos - 100, 550, 100, 10);
     context.closePath();
     console.log(posR);
   }
@@ -163,7 +165,11 @@ function updateScoreBoard(score){
 document.addEventListener("DOMContentLoaded", () => {
     canvas = document.querySelector("#projectCanvas");
     context = canvas.getContext("2d");
+  
+    let bounds = canvas.getBoundingClientRect();
+    console.log(bounds.top, bounds.right, bounds.bottom, bounds.left);
+    wallLeftPos = bounds.left;
+    wallRightPos = bounds.right;
+    wallTopPos = bounds.top;
+    
   })
-
-
-
