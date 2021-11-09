@@ -9,14 +9,22 @@
         </style>
   </head>
 
-  
-  <div style = 'border: 3px solid black; width: 10%; padding-left: 20px; padding-right: 100px; padding-bottom: -100; margin-bottom: 10px; margin-top: 10px;'>
+  <div id = "container">
+  <div style = 'float: left; border: 3px solid black; width: 10%; padding-left: 20px; padding-right: 100px; padding-bottom: -100; margin-bottom: 10px; margin-top: 10px; margin-left: 10px;'>
     <center><h1>Scoreboard</h1></center>
     <hr>	  
     <p id = 'score'> Score: 0 </p>
   </div>
+  <div style = 'float: left; width: 10%; padding-left: 20px; padding-right: 100px; padding-bottom: -100; margin-bottom: 10px; margin-top: 10px; margin-left: 10px;'>
+    <center><b id = 'Speed'> Speed: </b></center>
+    <button id = "btn1x" type = "speed1x" style = 'margin-left: 15px; margin-top: 10px; background-color: cornflowerblue; border: 2px solid black; font-size: 20px'> 1x </button>
+    <button id = "btn 2x" type = "speed2x" style = 'margin-top: 10px; background-color: orange; border: 2px solid black; font-size: 20px'> 2x </button>
+    <button id = "btn 3x" type = "speed3x" style = 'margin-top: 10px; background-color: orangered; border: 2px solid black; font-size: 20px'> 3x </button>
+  </div>
+  </div>
+
   <body onLoad = "setup();">
-    <canvas id="projectCanvas" width = 1600px, height = 700px, style = "background-color: #202526;">
+  <canvas id="projectCanvas" width = 1400px, height = 700px, style = "background-color: #202526;  border: 2px solid; ">
     </canvas>
   </body>
   <script src="script.js"></script>
