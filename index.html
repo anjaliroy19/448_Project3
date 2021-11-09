@@ -17,9 +17,9 @@
   </div>
   <div style = 'float: left; width: 10%; padding-left: 20px; padding-right: 100px; padding-bottom: -100; margin-bottom: 10px; margin-top: 10px; margin-left: 10px;'>
     <center><b id = 'Speed'> Speed: </b></center>
-    <button id = "btn1x" type = "speed1x" style = 'margin-left: 15px; margin-top: 10px; background-color: cornflowerblue; border: 2px solid black; font-size: 20px'> 1x </button>
-    <button id = "btn 2x" type = "speed2x" style = 'margin-top: 10px; background-color: orange; border: 2px solid black; font-size: 20px'> 2x </button>
-    <button id = "btn 3x" type = "speed3x" style = 'margin-top: 10px; background-color: orangered; border: 2px solid black; font-size: 20px'> 3x </button>
+    <button type = "button" id = "btn1x" onclick = "btnSpeed(id, 'btn2x', 'btn3x')" style = 'margin-left: 15px; margin-top: 10px; background-color: cornflowerblue; border: 2px solid black; font-size: 20px'> 1x </button>
+    <button type = "button" id = "btn2x" onclick = "btnSpeed(id, 'btn3x', 'btn1x')" style = 'margin-top: 10px; background-color: orange; border: 2px solid black; font-size: 20px'> 2x </button>
+    <button type = "button" id = "btn3x" onclick = "btnSpeed(id, 'btn2x', 'btn1x')" style = 'margin-top: 10px; background-color: orangered; border: 2px solid black; font-size: 20px'> 3x </button>
   </div>
   </div>
 

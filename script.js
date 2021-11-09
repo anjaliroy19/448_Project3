@@ -2,8 +2,8 @@ let canvas;
 var context;
 var x;
 var y;
-var dx=0;
-var dy=0;
+var dx=1;
+var dy=-1;
 let wallLeftPos; 
 let wallRightPos; 
 let wallTopPos;
@@ -17,6 +17,9 @@ let brickTotal = row*col; //Using for if all bricks are destroyed
 let spaceX = 5
 let spaceY = 5
 let score = 0;
+let startGame = false;
+
+
 
 document.addEventListener('mousemove', e => { 
     posPaddle = e.clientX;
@@ -29,14 +32,15 @@ function setup(){
     makeBricks();
     drawBricks();
     drawPaddle(posPaddle);
+    let btn1 = document.getElementById('btn1x');
+    btn1.style.fontSize = "25px";
 }
 
 function start(){
-    if (dx == 0 && dy == 0) {
+    if (startGame == false) {
       x = 750;//change this to be at position above paddle
       y = 500;//^^
-      dx = 1;
-      dy = -1;
+      startGame = true;
       setInterval(moveBall,5); //calls gameLoop() every 5 ms
     }
 }
@@ -152,11 +156,34 @@ function drawPaddle() {
 }
 
 function hitPaddle() {
-  if((y == 550) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
+  if((y == 550) && (x > posPaddle-52) && (x < posPaddle+52)) { //The Y value can be changed to whatever in the final project.
     console.log("paddleHit");
     dy = -dy;
   }
 
+}
+
+//called on speed button click
+function btnSpeed(id, id2, id3){
+    let btn1 = document.getElementById(id);
+    btn1.style.fontSize = "25px";
+    let btn2 = document.getElementById(id2);
+    btn2.style.fontSize = "20px";
+    let btn3 = document.getElementById(id3);
+    btn3.style.fontSize = "20px";
+    
+    if (id == 'btn1x'){
+        dx = 1*dx/(Math.abs(dx));
+        dy = 1*dy/(Math.abs(dy));
+    }
+    else if (id == 'btn2x'){
+        dx = 1.5*dx/(Math.abs(dx));
+        dy = 1.5*dy/(Math.abs(dy));
+    }
+    else if (id == 'btn3x'){
+        dx = 2*dx/(Math.abs(dx));
+        dy = 2*dy/(Math.abs(dy));
+    }
 }
 
 
