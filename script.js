@@ -2,8 +2,8 @@ let canvas;
 var context;
 var x;
 var y;
-var dx=1;
-var dy=-1;
+var dx=1.2;
+var dy=-1.2;
 let wallLeftPos; 
 let wallRightPos; 
 let wallTopPos;
@@ -24,7 +24,7 @@ let startGame = false;
 document.addEventListener('mousemove', e => { 
     posPaddle = e.clientX;
 });
-document.addEventListener("click", start);
+document.getElementById("projectCanvas").addEventListener("click", start);
 
 
 function setup(){
@@ -46,11 +46,11 @@ function start(){
 }
 
 function moveBall(){
+    setDxDy();
     drawBall(x,y);
     drawPaddle(posPaddle);
     drawBricks();
     hitDetect();
-    setDxDy();
     x = x + dx;
     y = y + dy;
 }
@@ -69,10 +69,10 @@ function setDxDy(){
     if (x <= wallLeftPos || x >= wallRightPos){
         dx = -dx;
     }
-    if (y <= 0 || y > 600){ //made a bottom border for testing - remove when adding paddle
+    if (y <= 0 || y > 700){ //made a bottom border for testing - remove when adding paddle
         dy = -dy;
     }
-    if (y > 600){
+    if (y > 700){
         gameOver();
     }
 }
@@ -156,7 +156,7 @@ function drawPaddle() {
 }
 
 function hitPaddle() {
-  if((y == 550) && (x > posPaddle-52) && (x < posPaddle+52)) { //The Y value can be changed to whatever in the final project.
+  if((y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
     console.log("paddleHit");
     dy = -dy;
   }
@@ -177,12 +177,12 @@ function btnSpeed(id, id2, id3){
         dy = 1*dy/(Math.abs(dy));
     }
     else if (id == 'btn2x'){
-        dx = 1.5*dx/(Math.abs(dx));
-        dy = 1.5*dy/(Math.abs(dy));
-    }
-    else if (id == 'btn3x'){
         dx = 2*dx/(Math.abs(dx));
         dy = 2*dy/(Math.abs(dy));
+    }
+    else if (id == 'btn3x'){
+        dx = 3*dx/(Math.abs(dx));
+        dy = 3*dy/(Math.abs(dy));
     }
 }
 
