@@ -1,4 +1,4 @@
-let canvas;
+f3let canvas;
 var context;
 var x;
 var y;
@@ -146,7 +146,7 @@ function hitDetect(){
                     console.log('hit')
                     score++;
                     updateScoreBoard(score);
-                    if(score >= 3 && level == 1){
+                    if(score >= 21 && level == 1){
                         level = 2;
                         score = 0;
                         x = 750;
