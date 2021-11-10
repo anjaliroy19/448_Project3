@@ -17,6 +17,7 @@ let brickTotal = row*col; //Using for if all bricks are destroyed
 let spaceX = 5
 let spaceY = 5
 let score = 0;
+let level = 1;
 let startGame = false;
 
 
@@ -85,43 +86,97 @@ function gameOver(){
 
 
 function makeBricks(){
-    for(let i = 0; i < col; i++){
-        bricks[i] = []
-        for(let j = 0; j < row; j++){
-            bricks[i][j] = { x: 0, y: 0, on: 'yes'}
-            bricks[i][j].x = i * (width + spaceX)
-            bricks[i][j].y = j * (height + spaceY)
+    if(level == 1){
+        for(let i = 0; i < col; i++){
+            bricks[i] = []
+            for(let j = 0; j < row; j++){
+                bricks[i][j] = { x: 0, y: 0, on: 'yes'}
+                bricks[i][j].x = i * (width + spaceX)
+                bricks[i][j].y = j * (height + spaceY)
+            }
+        }
+    }
+    else if(level == 2){
+        for(let i = 0; i < col + 1; i++){
+            bricks[i] = []
+            for(let j = 0; j < row + 1; j++){
+                bricks[i][j] = { x: 0, y: 0, on: 'yes'}
+                bricks[i][j].x = i * (width + spaceX)
+                bricks[i][j].y = j * (height + spaceY)
+            }
         }
     }
 }
 
 function drawBricks(){
-    for(let i = 0; i < col; i++){
-        for(let j = 0; j < row; j++){
-            if(bricks[i][j].on == 'yes'){
-                context.beginPath();
-                context.fillStyle = "gray";
-                context.rect(bricks[i][j].x, bricks[i][j].y, width, height);
-                context.closePath(); 
-                context.fill(); 
-            }          
+    if(level == 1){
+        for(let i = 0; i < col; i++){
+            for(let j = 0; j < row; j++){
+                if(bricks[i][j].on == 'yes'){
+                    context.beginPath();
+                    context.fillStyle = "gray";
+                    context.rect(bricks[i][j].x, bricks[i][j].y, width, height);
+                    context.closePath(); 
+                    context.fill(); 
+                }          
+            }
+        }
+        //console.log(bricks)
+    }
+    else if (level == 2){
+        for(let i = 0; i < col + 1; i++){
+            for(let j = 0; j < row + 1; j++){
+                if(bricks[i][j].on == 'yes'){
+                    context.beginPath();
+                    context.fillStyle = "green";
+                    context.rect(bricks[i][j].x, bricks[i][j].y, width - 20, height - 20);
+                    context.closePath(); 
+                    context.fill(); 
+                }          
+            }
         }
     }
-    //console.log(bricks)
 }
 
 function hitDetect(){
-    for(let i = 0; i < col; i++){
-        for(let j = 0; j < row; j++){
-            if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height && bricks[i][j].on == 'yes'){
-                console.log('hit')
-                score++;
-                updateScoreBoard(score);
-                context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
-                dy = -dy
-                bricks[i][j].on = 'no'
-		if(score == brickTotal) {gameOver();} //If equal all bricks are destroyed.
-                //need to remove bricks from array
+    if(level == 1){
+        for(let i = 0; i < col; i++){
+            for(let j = 0; j < row; j++){
+                if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height && bricks[i][j].on == 'yes'){
+                    console.log('hit')
+                    score++;
+                    updateScoreBoard(score);
+                    if(score >= 3 && level == 1){
+                        level = 2;
+                        score = 0;
+                        x = 750;
+                        y = 500;
+                        dy = -dy
+                        makeBricks();
+                        drawBricks();
+                    }
+                    context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
+                    dy = -dy
+                    bricks[i][j].on = 'no'
+            if(score == brickTotal) {gameOver();} //If equal all bricks are destroyed.
+                    //need to remove bricks from array
+                }
+            }
+        }
+    }
+    else if(level == 2){
+        for(let i = 0; i < col + 1; i++){
+            for(let j = 0; j < row + 1; j++){
+                if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height && bricks[i][j].on == 'yes'){
+                    console.log('hit')
+                    score++;
+                    updateScoreBoard(score);
+                    context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
+                    dy = -dy
+                    bricks[i][j].on = 'no'
+            if(score == brickTotal) {gameOver();} //If equal all bricks are destroyed.
+                    //need to remove bricks from array
+                }
             }
         }
     }
