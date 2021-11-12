@@ -20,6 +20,7 @@ let score = 0;
 let level = 1;
 let startGame = false;
 let lives = 3;
+let mvBallInterval;
 
 
 
@@ -43,7 +44,7 @@ function start(){
       x = 750;//change this to be at position above paddle
       y = 500;//^^
       startGame = true;
-      setInterval(moveBall,5); //calls gameLoop() every 5 ms
+      mvBallInterval = setInterval(moveBall,5); //calls gameLoop() every 5 ms
     }
 }
 
@@ -281,3 +282,32 @@ document.addEventListener("DOMContentLoaded", () => {
     heartDisplay();
     
   })
+function reset() {
+	canvas;
+ 	context;
+	x;
+	y;
+	dx=1.2;
+	dy=-1.2;
+	wallLeftPos; 
+	wallRightPos; 
+	wallTopPos;
+	posPaddle = 750; //Center X position for paddle
+	row = 3;
+	col = 7;
+	width = 200;
+	height = 50;
+	bricks = []
+	brickTotal = row*col; //Using for if all bricks are destroyed
+	spaceX = 5
+	spaceY = 5
+	score = 0;
+	level = 1;
+	startGame = false;
+	lives = 3;
+    drawBall(750,540);
+    makeBricks();
+    drawBricks();
+    drawPaddle(posPaddle);
+    clearInterval(mvBallInterval);
+}
