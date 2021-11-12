@@ -1,4 +1,4 @@
-f3let canvas;
+let canvas;
 var context;
 var x;
 var y;
@@ -19,6 +19,7 @@ let spaceY = 5
 let score = 0;
 let level = 1;
 let startGame = false;
+let lives = 3;
 
 
 
@@ -74,8 +75,29 @@ function setDxDy(){
         dy = -dy;
     }
     if (y > 700){
-        gameOver();
+        lives--;
+        heartDisplay();
+        if (lives <= 0) {
+        	gameOver();
+        }
+        else {
+        	//reshoot ball
+        }
     }
+}
+
+function heartDisplay() {
+	console.log()
+	if (lives < 3) {
+		document.getElementById("heart3").style.display = "none";
+	}
+	if (lives < 2) {
+		document.getElementById("heart2").style.display = "none";
+	}
+	if (lives < 1) {
+		document.getElementById("heart1").style.display = "none";
+	}
+	return;
 }
 
 function gameOver(){
@@ -255,5 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
     wallLeftPos = bounds.left;
     wallRightPos = bounds.right;
     wallTopPos = bounds.top;
+
+    heartDisplay();
     
   })
