@@ -6,6 +6,24 @@
             margin: 0;
             overflow: hidden;
           }
+          #heartsContainer {
+            padding-top: 10px;
+            display: inline-block;
+            margin-left: 10px;
+          }
+          .heart {
+            width: 50px;
+            height: 50px;
+            background-image: url('https://cdn.pixabay.com/photo/2017/09/23/16/33/pixel-heart-2779422_1280.png');
+            /*from https://developer.mozilla.org/en-US/docs/Web/CSS/background-size*/
+            background-size: contain;
+            display: inline-block;
+          }
+          #testBtn {
+            margin: 10px;
+            font-size: 20px;
+
+          }
         </style>
   </head>
 
@@ -21,11 +39,15 @@
     <button type = "button" id = "btn2x" onclick = "btnSpeed(id, 'btn3x', 'btn1x')" style = 'margin-top: 10px; background-color: orange; border: 2px solid black; font-size: 20px'> 2x </button>
     <button type = "button" id = "btn3x" onclick = "btnSpeed(id, 'btn2x', 'btn1x')" style = 'margin-top: 10px; background-color: orangered; border: 2px solid black; font-size: 20px'> 3x </button>
   </div>
+  <div id = "heartsContainer">
+    <div class = "heart" id = "heart1"></div>
+    <div class = "heart" id = "heart2"></div>
+    <div class = "heart" id = "heart3"></div>
   </div>
-
   <body onLoad = "setup();">
-  <canvas id="projectCanvas" width = 1400px, height = 700px, style = "background-color: #202526;  border: 2px solid; ">
+  <canvas id="projectCanvas" width = 1400px, height = 700px, style = "background-color: #202526;  border: 2px solid; display: block; ">
     </canvas>
+  <input id = "testBtn" type = "button" value = "Test" onClick = "startTest()">
   </body>
   <script src="script.js"></script>
 </HTML>
