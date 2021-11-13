@@ -12,15 +12,15 @@ let row = 3;
 let col = 7;
 let width = 200;
 let height = 50;
-let bricks = []
-let brickTotal = row*col; //Using for if all bricks are destroyed
-let spaceX = 5
-let spaceY = 5
+let bricks = [];
+let spaceX = 5;
+let spaceY = 5;
 let score = 0;
 let level = 1;
 let startGame = false;
 let lives = 3;
 let mvBallInterval;
+let healthTotal = 0; //the health of all the bricks for the level
 
 
 
@@ -57,7 +57,7 @@ function moveBall(){
     x = x + dx;
     y = y + dy;
 }
-
+//https://github.com/anjaliroy19/448_Project3.git
 function drawBall(posX, posY){
     context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
     context.beginPath();
@@ -111,21 +111,33 @@ function gameOver(){
 function makeBricks(){
     if(level == 1){
         for(let i = 0; i < col; i++){
-            bricks[i] = []
+            bricks[i] = [];
             for(let j = 0; j < row; j++){
-                bricks[i][j] = { x: 0, y: 0, on: 'yes'}
-                bricks[i][j].x = i * (width + spaceX)
-                bricks[i][j].y = j * (height + spaceY)
+                bricks[i][j] = { x: 0, y: 0, on: 'yes', health: 0}
+                bricks[i][j].x = i * (width + spaceX);
+                bricks[i][j].y = j * (height + spaceY);
+		if (j == 0) { bricks[i][j].health = 3;}
+		if (j == 1) { bricks[i][j].health = 2;}
+		if (j == 2) { bricks[i][j].health = 1;}
+	        healthTotal = healthTotal + bricks[i][j].health;
+	        console.log(healthTotal);
             }
         }
     }
     else if(level == 2){
+	healthTotal = 0;
         for(let i = 0; i < col + 1; i++){
-            bricks[i] = []
+            bricks[i] = [];
             for(let j = 0; j < row + 1; j++){
                 bricks[i][j] = { x: 0, y: 0, on: 'yes'}
-                bricks[i][j].x = i * (width + spaceX)
-                bricks[i][j].y = j * (height + spaceY)
+                bricks[i][j].x = i * (width + spaceX);
+                bricks[i][j].y = j * (height + spaceY);
+		if (j == 0) { bricks[i][j].health = 4;}
+		if (j == 1) { bricks[i][j].health = 3;}
+		if (j == 2) { bricks[i][j].health = 2;}
+		if (j == 3) { bricks[i][j].health = 1;}
+	        healthTotal = healthTotal + bricks[i][j].health;
+	        console.log(healthTotal);
             }
         }
     }
@@ -169,7 +181,13 @@ function hitDetect(){
                     console.log('hit')
                     score++;
                     updateScoreBoard(score);
-                    if(score >= 21 && level == 1){
+		    bricks[i][j].health--;
+		    dy= -dy;
+		    if(bricks[i][j].health < 1) {
+                      context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
+                      bricks[i][j].on = 'no';
+		    } 
+                    if(score == healthTotal && level == 1){
                         level = 2;
                         score = 0;
                         x = 750;
@@ -178,26 +196,28 @@ function hitDetect(){
                         makeBricks();
                         drawBricks();
                     }
-                    context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
-                    dy = -dy
-                    bricks[i][j].on = 'no'
-            if(score == brickTotal) {gameOver();} //If equal all bricks are destroyed.
-                    //need to remove bricks from array
+                    //context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
+                    //dy = -dy
+                    //bricks[i][j].on = 'no'
+            	    if(score == healthTotal) {gameOver();} //If equal all bricks are destroyed.
                 }
             }
         }
     }
     else if(level == 2){
+      //healthTotal = 0;
         for(let i = 0; i < col + 1; i++){
             for(let j = 0; j < row + 1; j++){
                 if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height && bricks[i][j].on == 'yes'){
                     console.log('hit')
                     score++;
                     updateScoreBoard(score);
-                    context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
-                    dy = -dy
-                    bricks[i][j].on = 'no'
-            if(score == brickTotal) {gameOver();} //If equal all bricks are destroyed.
+		    dy = -dy;
+		    if(bricks[i][j].health < 1) {
+                      context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
+                      bricks[i][j].on = 'no';
+		    }
+            if(score == healthTotal) {gameOver();} //If equal all bricks are destroyed.
                     //need to remove bricks from array
                 }
             }
