@@ -214,16 +214,16 @@ function hitDetect(){
                     console.log('hit')
                     score++;
                     updateScoreBoard(score);
-		    bricks[i][j].health--;
-		    dy= -dy;
-		    if(bricks[i][j].health < 1) {
-                      context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
-                      bricks[i][j].on = 'no';
-		    } 
+                    bricks[i][j].health--;
+                    dy= -dy;
+                    if(bricks[i][j].health < 1) {
+                            context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
+                            bricks[i][j].on = 'no';
+                    } 
                     if(score == healthTotal && level == 1){
                         level = 2;
                         score = 0;
-			healthTotal = 0;
+			            healthTotal = 0;
                         x = 750;
                         y = 500;
                         dy = -dy
@@ -233,7 +233,9 @@ function hitDetect(){
                     //context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                     //dy = -dy
                     //bricks[i][j].on = 'no'
-            	    if(score == healthTotal) {gameOver();} //If equal all bricks are destroyed.
+            	    if(score == healthTotal) {
+                        gameOver();
+                    } //If equal all bricks are destroyed.
                 }
             }
         }
@@ -245,14 +247,17 @@ function hitDetect(){
                 if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height && bricks[i][j].on == 'yes'){
                     console.log('hit')
                     score++;
+                    bricks[i][j].health--;
                     updateScoreBoard(score);
-		    dy = -dy;
-		    if(bricks[i][j].health < 1) {
-                      context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
-                      bricks[i][j].on = 'no';
-		    }
-            	if(score == healthTotal) {gameOver();} //If equal all bricks are destroyed.
-                    //need to remove bricks from array
+		            dy = -dy;
+                    if(bricks[i][j].health < 1) {
+                            context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
+                            bricks[i][j].on = 'no';
+                    }
+            	    if(score == healthTotal) {
+                        gameOver();
+                    } //If equal all bricks are destroyed.
+                        //need to remove bricks from array
                 }
             }
         }
