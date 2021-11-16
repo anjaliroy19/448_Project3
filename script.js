@@ -18,6 +18,7 @@ let spaceY = 5;
 let score = 0;
 let level = 1;
 let startGame = false;
+let testing = false;
 let lives = 3;
 let mvBallInterval;
 let healthTotal = 0; //the health of all the bricks for the level
@@ -111,13 +112,22 @@ function setDxDy(){
     if (y > 700){
         lives--;
         heartDisplay();
-        if (lives <= 0) {
-        	gameOver();
-        }
-        else {
-        	//reshoot ball
+        if (!(lives <= 0)) {
+        	softReset();
         }
     }
+}
+
+function softReset() {
+    dx=1.2;
+    dy=-1.2;
+    x = 750;
+    y = 540;
+    posPaddle = 750;
+    drawBall(750,540);
+    drawPaddle(posPaddle);
+    clearInterval(mvBallInterval);
+    startGame = false;
 }
 
 function heartDisplay() {
@@ -130,6 +140,7 @@ function heartDisplay() {
 	}
 	if (lives < 1) {
 		document.getElementById("heart1").style.display = "none";
+        gameOver();
 	}
 	return;
 }
@@ -343,15 +354,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
   })
 function reset() {
-	canvas;
- 	context;
-	x;
-	y;
 	dx=1.2;
 	dy=-1.2;
-	wallLeftPos; 
-	wallRightPos; 
-	wallTopPos;
 	posPaddle = 750; //Center X position for paddle
 	row = 3;
 	col = 7;
@@ -364,10 +368,12 @@ function reset() {
 	score = 0;
 	level = 1;
 	startGame = false;
+    testing = true;
 	lives = 3;
     drawBall(750,540);
     makeBricks();
     drawBricks();
     drawPaddle(posPaddle);
     clearInterval(mvBallInterval);
+    document.getElementsByClassName("test").style.display("initial");
 }
