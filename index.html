@@ -22,7 +22,11 @@
           #testBtn {
             margin: 10px;
             font-size: 20px;
-
+            border: 2px solid black;
+          }
+          .test {
+          	border: 2px solid black;
+          	display: none;
           }
         </style>
   </head>
@@ -48,6 +52,10 @@
   <canvas id="projectCanvas" width = 1400px, height = 700px, style = "background-color: #202526;  border: 2px solid; display: block; ">
     </canvas>
   <input id = "testBtn" type = "button" value = "Test" onClick = "reset()">
+  <input id = "test1" class = "test" type = "button" value = "Test 1 - " onClick = "test1()">
+  <input id = "test2" class = "test" type = "button" value = "Test 2 - " onClick = "test2()">
+  <input id = "test3" class = "test" type = "button" value = "Test 3 - " onClick = "test3()">
+  <input id = "test4" class = "test" type = "button" value = "Test 4 - " onClick = "test4()">
   </body>
   <script src="script.js"></script>
 </HTML>
