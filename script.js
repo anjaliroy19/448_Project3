@@ -119,8 +119,8 @@ function setDxDy(){
 }
 
 function softReset() {
-    dx=1.2;
-    dy=-1.2;
+    dx=Math.abs(dx);
+    dy=-1*(Math.abs(dy));
     x = 750;
     y = 540;
     posPaddle = 750;
