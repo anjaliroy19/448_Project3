@@ -4,8 +4,8 @@ var x;
 var y;
 var dx=1.2;
 var dy=-1.2;
-let wallLeftPos; 
-let wallRightPos; 
+let wallLeftPos; //absolute position of left wall of canvas, not relative to canvas
+let wallRightPos; //absolute position of right wall of canvas, not relative to canvas
 let wallTopPos;
 let posPaddle = 750; //Center X position for paddle
 let row = 3;
@@ -27,7 +27,7 @@ let test = 0;
 
 
 document.addEventListener('mousemove', e => { 
-    posPaddle = e.clientX - wallLeftPos;
+    posPaddle = e.clientX - wallLeftPos; //sets posPaddle to the x position of the mouse relative to the canvas
 });
 document.getElementById("projectCanvas").addEventListener("click", start);
 
@@ -103,7 +103,7 @@ function drawBall(posX, posY){
 
 function setDxDy(){
     //change dx and dy after hitting a wall, block, and paddle
-    if (x <= 10 || x >= (wallRightPos-wallLeftPos) -10){
+    if (x <= 10 || x >= (wallRightPos-wallLeftPos) -10){ //checks if edge of ball is within canvas
         dx = -dx;
     }
     if (y <= 10 || y > 700){ //made a bottom border for testing - remove when adding paddle
@@ -118,6 +118,13 @@ function setDxDy(){
     }
 }
 
+
+/*
+* @pre lost a life
+* @post sets ball and paddle back to original position, stops the ball moving until a click activates start()
+* @param none
+* @return none
+*/
 function softReset() {
     dx=Math.abs(dx);
     dy=-1*(Math.abs(dy));
@@ -130,6 +137,13 @@ function softReset() {
     startGame = false;
 }
 
+
+/*
+* @pre none
+* @post stops displaying 1 heart per life lost
+* @param none
+* @return none
+*/
 function heartDisplay() {
 	console.log()
 	if (lives < 3) {
@@ -353,6 +367,14 @@ document.addEventListener("DOMContentLoaded", () => {
     heartDisplay();
     
   })
+
+
+/*
+* @pre click test button
+* @post resets all variables so they can be changed for specific tests
+* @param none
+* @return none
+*/
 function reset() {
 	dx=1.2;
 	dy=-1.2;
