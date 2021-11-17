@@ -27,7 +27,7 @@ let test = 0;
 
 
 document.addEventListener('mousemove', e => { 
-    posPaddle = e.clientX;
+    posPaddle = e.clientX - wallLeftPos;
 });
 document.getElementById("projectCanvas").addEventListener("click", start);
 
@@ -103,7 +103,7 @@ function drawBall(posX, posY){
 
 function setDxDy(){
     //change dx and dy after hitting a wall, block, and paddle
-    if (x <= wallLeftPos || x >= wallRightPos){
+    if (x <= 0 || x >= wallRightPos-wallLeftPos){
         dx = -dx;
     }
     if (y <= 0 || y > 700){ //made a bottom border for testing - remove when adding paddle
@@ -277,26 +277,26 @@ function hitDetect(){
 
 function drawPaddle() {
   let posR = posPaddle;
-  if(posR => wallLeftPos && posR <= wallRightPos) { //Paddle movements within the game border 
+  if (posR => 50 && posR <= wallRightPos-wallLeftPos-50) { //Paddle movements within the game border 
     context.beginPath();
     context.fillStyle = 'Blue';
     context.fillRect(posR-50, 550, 100, 10);
     context.closePath();
     console.log(posR);
   }
-  if(posR < wallLeftPos + 50) { //For left side border case
-    posPaddle=wallLeftPos + 50;
+  if(posR < 50) { //For left side border case
+    posPaddle=50;
     context.beginPath();
     context.fillStyle = 'Blue';
-    context.fillRect(wallLeftPos, 550, 100, 10);
+    context.fillRect(0, 550, 100, 10);
     context.closePath();
     console.log(posR);
   }
-  if(posR > wallRightPos - 50) { //For right side border case
-    posPaddle=wallRightPos - 50;
+  if(posR > (wallRightPos-wallLeftPos) - 50) { //For right side border case
+    posPaddle=(wallRightPos-wallLeftPos) - 50;
     context.beginPath();
     context.fillStyle = 'Blue';
-    context.fillRect(wallRightPos - 100, 550, 100, 10);
+    context.fillRect(wallRightPos-wallLeftPos - 100, 550, 100, 10);
     context.closePath();
     console.log(posR);
   }
