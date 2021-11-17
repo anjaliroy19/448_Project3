@@ -103,10 +103,10 @@ function drawBall(posX, posY){
 
 function setDxDy(){
     //change dx and dy after hitting a wall, block, and paddle
-    if (x <= 0 || x >= wallRightPos-wallLeftPos){
+    if (x <= 10 || x >= (wallRightPos-wallLeftPos) -10){
         dx = -dx;
     }
-    if (y <= 0 || y > 700){ //made a bottom border for testing - remove when adding paddle
+    if (y <= 10 || y > 700){ //made a bottom border for testing - remove when adding paddle
         dy = -dy;
     }
     if (y > 700){
