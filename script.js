@@ -3,11 +3,11 @@ var context;
 var x;
 var y;
 var dx=1.2;
-var dy=-1.2;
+var dy=1.2;
 let wallLeftPos; //absolute position of left wall of canvas, not relative to canvas
 let wallRightPos; //absolute position of right wall of canvas, not relative to canvas
 let wallTopPos;
-let posPaddle = 750; //Center X position for paddle
+let posPaddle; //Center X position for paddle
 let row = 3;
 let col = 7;
 let width = 200;
@@ -23,6 +23,8 @@ let lives = 3;
 let mvBallInterval;
 let healthTotal = 0; //the health of all the bricks for the level
 let test = 0;
+let initialBall = false;
+
 
 
 
@@ -34,9 +36,11 @@ document.getElementById("projectCanvas").addEventListener("click", start);
 document.getElementById("testBtn").addEventListener("click", setupTest);
 
 function setup(){
-    drawBall(750,540);
+    x = Math.floor((Math.random() * 1000) + 200);
+    drawBall(x,300);
     makeBricks();
     drawBricks();
+    posPaddle = x;
     drawPaddle(posPaddle);
     let btn1 = document.getElementById('btn1x');
     btn1.style.fontSize = "25px";
@@ -45,7 +49,7 @@ function setup(){
 function setupTest(){
   test = 1;
   if(lives == 3) {
-    drawBall(750,540);
+    drawBall(750,300);
     mvBallInterval = setInterval(moveBall,5);
   }
   if(lives == 2) {
@@ -57,8 +61,7 @@ function setupTest(){
 
 function start(){
     if (startGame == false) {
-      x = 750;//change this to be at position above paddle
-      y = 500;//^^
+      y = 300;//^^
       startGame = true;
       mvBallInterval = setInterval(moveBall,5); //calls gameLoop() every 5 ms
     }
@@ -71,8 +74,10 @@ function moveBall(){
     drawPaddle(posPaddle);
     drawBricks();
     hitDetect();
-    x = x + dx;
     y = y + dy;
+    if(initialBall == true){
+        x = x + dx;
+    }
   } 
   else {
     setDxDy();
@@ -126,12 +131,13 @@ function setDxDy(){
 * @return none
 */
 function softReset() {
+    initialBall = false;
     dx=Math.abs(dx);
-    dy=-1*(Math.abs(dy));
-    x = 750;
-    y = 540;
-    posPaddle = 750;
-    drawBall(750,540);
+    dy= 1*(Math.abs(dy));
+    x = Math.floor((Math.random() * 1000) + 200);;
+    y = 300;
+    posPaddle = x;
+    drawBall(x,300);
     drawPaddle(posPaddle);
     clearInterval(mvBallInterval);
     startGame = false;
@@ -161,7 +167,12 @@ function heartDisplay() {
 
 function gameOver(){
     //later add an image
-    window.alert("Game over! You scored: " + score + " point(s)");
+    if (score == 28){
+        window.alert("Congratulations! You beat the game!");
+    }
+    else{
+        window.alert("Game over! You scored: " + score + " point(s)");
+    }
     location.reload();
 }
 
@@ -247,11 +258,11 @@ function hitDetect(){
                     } 
                     if(score == healthTotal && level == 1){
                         level = 2;
+                        window.alert("Way to go, you passed level 1! Now onto level 2 ...");
                         score = 0;
+                        updateScoreBoard(score);
+                        softReset();
 			            healthTotal = 0;
-                        x = 750;
-                        y = 500;
-                        dy = -dy
                         makeBricks();
                         drawBricks();
                     }
@@ -279,7 +290,7 @@ function hitDetect(){
                             context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                             bricks[i][j].on = 'no';
                     }
-            	    if(score == healthTotal) {
+            	    if(score == 28) {
                         gameOver();
                     } //If equal all bricks are destroyed.
                         //need to remove bricks from array
@@ -321,6 +332,7 @@ function hitPaddle() {
   if((y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
     console.log("paddleHit");
     dy = -dy;
+    initialBall = true;
   }
 
 }
@@ -392,7 +404,7 @@ function reset() {
 	startGame = false;
     testing = true;
 	lives = 3;
-    drawBall(750,540);
+    drawBall(750,300);
     makeBricks();
     drawBricks();
     drawPaddle(posPaddle);
