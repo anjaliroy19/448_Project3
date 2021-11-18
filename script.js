@@ -58,16 +58,12 @@ function setup(){
 
 function setupTest(){
   test = 1;
-<<<<<<< HEAD
   //startGame = true;
   mvBallInterval = setInterval(moveBall,5);
   /*if(lives == 3) {
-    
-=======
   if(lives == 3) {
     drawBall(750,300);
     mvBallInterval = setInterval(moveBall,5);
->>>>>>> 1c9e3f9c3233de20b9000c397fcf8d686c374459
   }
   if(lives == 2) {
     
@@ -194,7 +190,6 @@ function setDxDy(){
 * @return none
 */
 function softReset() {
-<<<<<<< HEAD
     console.log(test);
     dx=Math.abs(dx);
     dy=-1*(Math.abs(dy));
@@ -204,7 +199,6 @@ function softReset() {
     if((test == 1) && (lives == 1)) { drawBall(20,70);} //FOR TESTING
     else if(test == 0) {
     drawBall(750,540);
-=======
     initialBall = false;
     dx=Math.abs(dx);
     dy= 1*(Math.abs(dy));
@@ -212,7 +206,6 @@ function softReset() {
     y = 300;
     posPaddle = x;
     drawBall(x,300);
->>>>>>> 1c9e3f9c3233de20b9000c397fcf8d686c374459
     drawPaddle(posPaddle);
     clearInterval(mvBallInterval);
     startGame = false;
@@ -343,16 +336,13 @@ function hitDetect(){
                         level = 2;
                         window.alert("Way to go, you passed level 1! Now onto level 2 ...");
                         score = 0;
-<<<<<<< HEAD
 			healthTotal = 0;
                         x = 750;
                         y = 500;
                         dy = -dy
-=======
                         updateScoreBoard(score);
                         softReset();
 			            healthTotal = 0;
->>>>>>> 1c9e3f9c3233de20b9000c397fcf8d686c374459
                         makeBricks();
                         drawBricks();
                     }
@@ -392,35 +382,33 @@ function hitDetect(){
 
 function drawPaddle() {
   let posR = posPaddle;
-<<<<<<< HEAD
   if(test == 1) {posR = 950;} //ADDED FOR TESTING
   if(posR => wallLeftPos && posR <= wallRightPos) { //Paddle movements within the game border 
-=======
-  if (posR => 50 && posR <= wallRightPos-wallLeftPos-50) { //Paddle movements within the game border 
->>>>>>> 1c9e3f9c3233de20b9000c397fcf8d686c374459
-    context.beginPath();
-    context.fillStyle = 'Blue';
-    context.fillRect(posR-50, 550, 100, 10);
-    context.closePath();
-    console.log(posR);
+    if (posR => 50 && posR <= wallRightPos-wallLeftPos-50) { //Paddle movements within the game border 
+      context.beginPath();
+      context.fillStyle = 'Blue';
+      context.fillRect(posR-50, 550, 100, 10);
+      context.closePath();
+      console.log(posR);
+    }
+    if(posR < 50) { //For left side border case
+      posPaddle=50;
+      context.beginPath();
+      context.fillStyle = 'Blue';
+      context.fillRect(0, 550, 100, 10);
+      context.closePath();
+      console.log(posR);
+    }
+    if(posR > (wallRightPos-wallLeftPos) - 50) { //For right side border case
+      posPaddle=(wallRightPos-wallLeftPos) - 50;
+      context.beginPath();
+      context.fillStyle = 'Blue';
+      context.fillRect(wallRightPos-wallLeftPos - 100, 550, 100, 10);
+      context.closePath();
+      console.log(posR);
+    }
+    hitPaddle();
   }
-  if(posR < 50) { //For left side border case
-    posPaddle=50;
-    context.beginPath();
-    context.fillStyle = 'Blue';
-    context.fillRect(0, 550, 100, 10);
-    context.closePath();
-    console.log(posR);
-  }
-  if(posR > (wallRightPos-wallLeftPos) - 50) { //For right side border case
-    posPaddle=(wallRightPos-wallLeftPos) - 50;
-    context.beginPath();
-    context.fillStyle = 'Blue';
-    context.fillRect(wallRightPos-wallLeftPos - 100, 550, 100, 10);
-    context.closePath();
-    console.log(posR);
-  }
-  hitPaddle();
 }
 
 function hitPaddle() {
