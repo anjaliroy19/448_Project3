@@ -2,7 +2,7 @@ let canvas;
 var context;
 var x;
 var y;
-var dx=1.2;
+var dx=0.7;
 var dy=1.2;
 let wallLeftPos; //absolute position of left wall of canvas, not relative to canvas
 let wallRightPos; //absolute position of right wall of canvas, not relative to canvas
@@ -390,15 +390,15 @@ function btnSpeed(id, id2, id3){
     btn3.style.fontSize = "20px";
     
     if (id == 'btn1x'){
-        dx = 1*dx/(Math.abs(dx));
+        dx = .5*dx/(Math.abs(dx));
         dy = 1*dy/(Math.abs(dy));
     }
     else if (id == 'btn2x'){
-        dx = 2*dx/(Math.abs(dx));
+        dx = 1*dx/(Math.abs(dx));
         dy = 2*dy/(Math.abs(dy));
     }
     else if (id == 'btn3x'){
-        dx = 3*dx/(Math.abs(dx));
+        dx = 1.5*dx/(Math.abs(dx));
         dy = 3*dy/(Math.abs(dy));
     }
 }
