@@ -69,13 +69,13 @@ healthTotal = 0;
     else if (lives == 1){
         x = 710;
     }
-  drawBall(x,y);
-  makeBricks();
-  drawBricks();
-  posPaddle = x;
-  drawPaddle();
-  mvBallInterval = setInterval(moveBall,5);
-  
+    drawBall(x,y);
+    makeBricks();
+    drawBricks();
+    posPaddle = x;
+    drawPaddle();
+    mvBallInterval = setInterval(moveBall,5);
+ 
 }
 
 /*
@@ -162,7 +162,6 @@ function setDxDy(){
 * @return none
 */
 function softReset() {
-
         initialBall = false;
         dx=Math.abs(dx);
         dy= 1*(Math.abs(dy));
@@ -173,8 +172,6 @@ function softReset() {
         drawPaddle();
         clearInterval(mvBallInterval);
         startGame = false;
-
-    
 }
 
 
@@ -208,6 +205,9 @@ function heartDisplay() {
 function gameOver(){
     //later add an image
     if (score == healthTotal){//when second level is beat
+	if(test == 1) {
+	window.alert(" TEST5: LEVEL2 START: SUCCESS\n TEST6: WIN: SUCCESS\n TEST7: GAMEOVER: SUCCESS"); 
+	}
         window.alert("Congratulations! You beat the game!");
     }
     else{
@@ -225,7 +225,7 @@ function gameOver(){
 function makeBricks(){
     if(test == 1) {
       row =1;
-      col = 5;
+      col = 3;
       console.log("test: " + test + "row: " + row + "col: " + col);
     }
     if(level == 1){
@@ -351,8 +351,11 @@ function hitDetect(){
                     } 
                     if(score == healthTotal && level == 1){
                         level = 2;
-                        window.alert("Way to go, you passed level 1! Now onto level 2 ...");
-                        score = 0;
+                        window.alert("Way to go, you passed level 1! Now onto level 2 ..."); //ADD WINDOW ALERTS
+			if(test == 1) {
+			  window.alert(" TEST1: BALL SPAWN: SUCCESS\n TEST2: HIT WALL AND PADDLE: SUCCESS\n TEST3: BRICK BREAK: SUCCESS\n TEST4: COMPLETION OF LEVEL1: SUCCESS");
+			}                        
+			score = 0;
                         updateScoreBoard(score);
                         softReset();
 			healthTotal = 0;
@@ -380,8 +383,8 @@ function hitDetect(){
                     updateScoreBoard(score);
 		    dy = -dy;
                     if(bricks[i][j].health < 1) {
-                            context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
-                            bricks[i][j].on = 'no';
+                      context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
+                      bricks[i][j].on = 'no';
                     }
             	    if(score == healthTotal) {
                         gameOver();
