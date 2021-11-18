@@ -2,7 +2,7 @@ let canvas;
 var context;
 var x;
 var y;
-var dx=1;
+var dx=.5;
 var dy=1.2;
 let wallLeftPos; //absolute position of left wall of canvas, not relative to canvas
 let wallRightPos; //absolute position of right wall of canvas, not relative to canvas
@@ -55,7 +55,7 @@ function setup(){
 }
 
 function setupTest(){
-    healthTotal = 0;
+healthTotal = 0;
   test = 1;
   row = 1;
   col = 5;
@@ -111,40 +111,6 @@ function moveBall(){
     if(initialBall == true){//so that the ball falls vertically at first until it hits paddle
         x = x + dx;
     } 
-  /*else if(test == 1) {
-    if(lives == 3) {
-      setDxDy();
-      drawBall(x,y);
-      drawPaddle();
-      d
-      drawBricks();
-      hitDetect();
-      y = y + dy;
-      if(initialBall == true) {x = x + dx;}
-    }
-    if(lives == 2) {
-      test = 1;
-      setDxDy();
-      drawBall(610,y);
-      drawPaddle();
-      drawBricks();
-      hitDetect();
-      y = y + dy;
-      if(initialBall == true) {x= x + dx;}
-    }
-    if(lives == 1) {
-      test = 1;
-      setDxDy();
-      drawBall(710,y);
-      drawPaddle();
-      drawBricks();
-      hitDetect();
-      y = y + dy;
-      if(initialBall == true) {x= x + dx;}
-      //setDxDy();
-      //drawBall(x,y); 
-      
-    }*/
   
 }
 //https://github.com/anjaliroy19/448_Project3.git
