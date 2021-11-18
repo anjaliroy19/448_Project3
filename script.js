@@ -236,7 +236,12 @@ function gameOver(){
     location.reload();
 }
 
-
+/*
+* @pre none
+* @post bricks array is made and bricks are given a position, health, and on status
+* @param none
+* @return none
+*/
 function makeBricks(){
     if(test == 1) {
       row =1;
@@ -277,7 +282,12 @@ function makeBricks(){
         }
     }
 }
-
+/*
+* @pre bricks array must be created
+* @post bricks are drawn to the screen
+* @param none
+* @return none
+*/
 function drawBricks(){
     if(level == 1){
         for(let i = 0; i < col; i++){
@@ -309,9 +319,21 @@ function drawBricks(){
                 if(bricks[i][j].on == 'yes'){
                     context.beginPath();
                     if(bricks[i][j].health == 1){
+<<<<<<< HEAD
                         context.fillStyle = "orange";
                     }
                     else if (bricks[i][j].health == 2){
+=======
+                        context.fillStyle = "yellow";
+                    }
+                    else if (bricks[i][j].health == 2){
+                        context.fillStyle = "orange";
+                    }
+                    else if (bricks[i][j].health == 3){
+                        context.fillStyle = "#6666ff";
+                    }
+                    else if (bricks[i][j].health == 4){
+>>>>>>> 7a04948af61ff009612c06e5dbe3634a7662b271
                         context.fillStyle = "magenta";
                     }
                     else if (bricks[i][j].health == 3){
@@ -327,7 +349,12 @@ function drawBricks(){
         }
     }
 }
-
+/*
+* @pre none
+* @post reduces brick health, updates score board, alerts user of loss or level pass
+* @param none
+* @return none
+*/
 function hitDetect(){
     if(level == 1){
         for(let i = 0; i < col; i++){
@@ -385,7 +412,12 @@ function hitDetect(){
         }
     }
 }
-
+/*
+* @pre none
+* @post paddle is created drawn to screen
+* @param none
+* @return none
+*/
 function drawPaddle() {
   let posR = posPaddle;
   if(test == 1) {posPaddle = 500;}
@@ -414,7 +446,12 @@ function drawPaddle() {
   }
     hitPaddle();
 }
-
+/*
+* @pre none
+* @post if ball hits paddle dy is changed so that ball bounces off paddle
+* @param none
+* @return none
+*/
 function hitPaddle() {
   //console.log(posPaddle);
   if((test == 1) && (y <= 552) && (y >= 550) && (posPaddle => 450) && (posPaddle <= 550)) { //ISNT CALLING THIS IF DURING TESTING
