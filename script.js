@@ -2,8 +2,8 @@ let canvas;
 var context;
 var x;
 var y;
-var dx=1.2;
-var dy=-1.2;
+var dx=0.7;
+var dy=1.2;
 let wallLeftPos; //absolute position of left wall of canvas, not relative to canvas
 let wallRightPos; //absolute position of right wall of canvas, not relative to canvas
 let wallTopPos;
@@ -31,6 +31,8 @@ let initialBall = false;
 document.addEventListener('mousemove', e => { 
     posPaddle = e.clientX - wallLeftPos; //sets posPaddle to the x position of the mouse relative to the canvas
 });
+
+document.addEventListener('click', r => {console.log(r.clientX);});
 document.getElementById("projectCanvas").addEventListener("click", start);
 
 document.getElementById("testBtn").addEventListener("click", setupTest);
@@ -54,21 +56,8 @@ function setup(){
 
 function setupTest(){
   test = 1;
-<<<<<<< HEAD
-  //startGame = true;
   mvBallInterval = setInterval(moveBall,5);
-  /*if(lives == 3) {
-=======
->>>>>>> cb64bc2151269bfa0897a8cce11ebf5ad65b9ba3
-  if(lives == 3) {
-    drawBall(750,300);
-    mvBallInterval = setInterval(moveBall,5);
-  }
-  if(lives == 2) {
-    drawBall (0,0);
-  }
-  if (lives == 1){
-  }
+
 }
 
 /*
@@ -100,24 +89,43 @@ function moveBall(){
     hitDetect();
     y = y + dy;
     if(initialBall == true){//so that the ball falls vertically at first until it hits paddle
-      x = x + dx;
+        x = x + dx;
     }
   } 
   else {
+    test = 1;
     setDxDy();
     drawBall(x,y);
+    drawPaddle();
+    row = 1;
+    col = 3;
+    drawBricks();
+    hitDetect();
     x = x + dx;
-    y = y - dy;
+    y = y + dy;
     if(lives == 2) {
+      test = 1;
       setDxDy();
-      drawBall(20,20);
+      drawBall(x,y);
+      drawBricks();
+      hitDetect();
       x = x + dx;
-      y = y - dy;
+      y = y + dy;
     }
-    //if(lives == 2) {
-    //row = 1;
-    //col = 1;
-    //drawBricks;
+    if(lives == 1) {
+      test = 1;
+      setDxDy();
+      drawBall(x,y);
+      drawPaddle();
+
+      drawBricks();
+      hitDetect();
+      x = x + dx;
+      y = y + dy;
+      //setDxDy();
+      //drawBall(x,y); 
+      
+    }
   }
 }
 //https://github.com/anjaliroy19/448_Project3.git
@@ -169,18 +177,6 @@ function setDxDy(){
 * @return none
 */
 function softReset() {
-<<<<<<< HEAD
-    console.log(test);
-    dx=Math.abs(dx);
-    dy=-1*(Math.abs(dy));
-    x = 750;
-    y = 540;
-    posPaddle = 750;
-    if((test == 1) && (lives == 1)) { drawBall(20,70);} //FOR TESTING
-    else if(test == 0) {
-    drawBall(750,540);
-=======
->>>>>>> cb64bc2151269bfa0897a8cce11ebf5ad65b9ba3
     initialBall = false;
     dx=Math.abs(dx);
     dy= 1*(Math.abs(dy));
@@ -241,9 +237,10 @@ function makeBricks(){
                 bricks[i][j] = { x: 0, y: 0, on: 'yes', health: 0}
                 bricks[i][j].x = i * (width + spaceX);
                 bricks[i][j].y = j * (height + spaceY);
-		if (j == 0) { bricks[i][j].health = 1;}
-		if (j == 1) { bricks[i][j].health = 1;}
+		if (j == 0) { bricks[i][j].health = 3;}
+		if (j == 1) { bricks[i][j].health = 2;}
 		if (j == 2) { bricks[i][j].health = 1;}	//3 NEEDS TO BE CHANGED TO 1
+		if (test == 1) { bricks[i][j].health = 1;}
 	        healthTotal = healthTotal + bricks[i][j].health;
 	        console.log(healthTotal);
             }
@@ -257,9 +254,9 @@ function makeBricks(){
                 bricks[i][j] = { x: 0, y: 0, on: 'yes'}
                 bricks[i][j].x = i * (width + spaceX);
                 bricks[i][j].y = j * (height + spaceY);
-		if (j == 0) { bricks[i][j].health = 1;}
-		if (j == 1) { bricks[i][j].health = 1;}
-		if (j == 2) { bricks[i][j].health = 1;}
+		if (j == 0) { bricks[i][j].health = 4;}
+		if (j == 1) { bricks[i][j].health = 3;}
+		if (j == 2) { bricks[i][j].health = 2;}
 		if (j == 3) { bricks[i][j].health = 1;}
 	        healthTotal = healthTotal + bricks[i][j].health;
 	        console.log(healthTotal);
@@ -316,16 +313,9 @@ function hitDetect(){
                         level = 2;
                         window.alert("Way to go, you passed level 1! Now onto level 2 ...");
                         score = 0;
-<<<<<<< HEAD
-			healthTotal = 0;
-                        x = 750;
-                        y = 500;
-                        dy = -dy
-=======
->>>>>>> cb64bc2151269bfa0897a8cce11ebf5ad65b9ba3
                         updateScoreBoard(score);
                         softReset();
-			            healthTotal = 0;
+			healthTotal = 0;
                         makeBricks();
                         drawBricks();
                     }
@@ -353,7 +343,7 @@ function hitDetect(){
                             context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                             bricks[i][j].on = 'no';
                     }
-            	    if(score == 28) {
+            	    if(score == healthTotal) {
                         gameOver();
                     } //If equal all bricks are destroyed.
                         //need to remove bricks from array
@@ -365,34 +355,7 @@ function hitDetect(){
 
 function drawPaddle() {
   let posR = posPaddle;
-<<<<<<< HEAD
-  if(test == 1) {posR = 950;} //ADDED FOR TESTING
-  if(posR => wallLeftPos && posR <= wallRightPos) { //Paddle movements within the game border 
-    if (posR => 50 && posR <= wallRightPos-wallLeftPos-50) { //Paddle movements within the game border 
-      context.beginPath();
-      context.fillStyle = 'Blue';
-      context.fillRect(posR-50, 550, 100, 10);
-      context.closePath();
-      console.log(posR);
-    }
-    if(posR < 50) { //For left side border case
-      posPaddle=50;
-      context.beginPath();
-      context.fillStyle = 'Blue';
-      context.fillRect(0, 550, 100, 10);
-      context.closePath();
-      console.log(posR);
-    }
-    if(posR > (wallRightPos-wallLeftPos) - 50) { //For right side border case
-      posPaddle=(wallRightPos-wallLeftPos) - 50;
-      context.beginPath();
-      context.fillStyle = 'Blue';
-      context.fillRect(wallRightPos-wallLeftPos - 100, 550, 100, 10);
-      context.closePath();
-      console.log(posR);
-    }
-    hitPaddle();
-=======
+  if(test == 1) {posR =1320;}
   if (posR => 50 && posR <= wallRightPos-wallLeftPos-50) { //Paddle movements within the game border 
     context.beginPath();
     context.fillStyle = 'Blue';
@@ -415,11 +378,12 @@ function drawPaddle() {
     context.fillRect(wallRightPos-wallLeftPos - 100, 550, 100, 10);
     context.closePath();
     console.log(posR);
->>>>>>> cb64bc2151269bfa0897a8cce11ebf5ad65b9ba3
   }
+    hitPaddle();
 }
 
 function hitPaddle() {
+  if((test == 1) && (y <= 552) && (y >= 550) && (x > 1300)) {dy= -dy;} //ADDED FOR TESTING
   if((y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
     console.log("paddleHit");
     dy = -dy;
