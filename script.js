@@ -391,7 +391,12 @@ function hitDetect(){
         }
     }
 }
-
+/*
+* @pre none
+* @post paddle is created drawn to screen
+* @param none
+* @return none
+*/
 function drawPaddle() {
   let posR = posPaddle;
   if(test == 1) {posR = 500;}
