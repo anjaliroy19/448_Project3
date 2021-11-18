@@ -24,11 +24,15 @@ let mvBallInterval;
 let healthTotal = 0; //the health of all the bricks for the level
 let test = 0;
 
+//HAVE THE SCORE NOT CHANGE AFTER LEVEL 1. HAVE IT ADD ON
+//BE ABLE TO CHANGE WHERE THE BALL SPAWNS. FOR TESTING AND GAMEPLAY
 
 
 document.addEventListener('mousemove', e => { 
     posPaddle = e.clientX;
 });
+
+document.addEventListener('click', r => {console.log(r.clientX);});
 document.getElementById("projectCanvas").addEventListener("click", start);
 
 document.getElementById("testBtn").addEventListener("click", setupTest);
@@ -44,15 +48,17 @@ function setup(){
 
 function setupTest(){
   test = 1;
-  if(lives == 3) {
-    drawBall(750,540);
-    mvBallInterval = setInterval(moveBall,5);
+  //startGame = true;
+  mvBallInterval = setInterval(moveBall,5);
+  /*if(lives == 3) {
+    
   }
   if(lives == 2) {
-    drawBall (0,0);
+    
   }
   if (lives == 1){
-  }
+    
+  }*/
 }
 
 function start(){
@@ -75,20 +81,39 @@ function moveBall(){
     y = y + dy;
   } 
   else {
+    test = 1;
     setDxDy();
     drawBall(x,y);
+    drawPaddle();
+    row = 1;
+    col = 3;
+    drawBricks();
+    hitDetect();
     x = x + dx;
-    y = y - dy;
+    y = y + dy;
     if(lives == 2) {
+      test = 1;
       setDxDy();
-      drawBall(20,20);
+      drawBall(x,y);
+      drawBricks();
+      hitDetect();
       x = x + dx;
-      y = y - dy;
+      y = y + dy;
     }
-    //if(lives == 2) {
-    //row = 1;
-    //col = 1;
-    //drawBricks;
+    if(lives == 1) {
+      test = 1;
+      setDxDy();
+      drawBall(x,y);
+      drawPaddle();
+
+      drawBricks();
+      hitDetect();
+      x = x + dx;
+      y = y + dy;
+      //setDxDy();
+      //drawBall(x,y); 
+      
+    }
   }
 }
 //https://github.com/anjaliroy19/448_Project3.git
@@ -119,15 +144,19 @@ function setDxDy(){
 }
 
 function softReset() {
+    console.log(test);
     dx=Math.abs(dx);
     dy=-1*(Math.abs(dy));
     x = 750;
     y = 540;
     posPaddle = 750;
+    if((test == 1) && (lives == 1)) { drawBall(20,70);} //FOR TESTING
+    else if(test == 0) {
     drawBall(750,540);
     drawPaddle(posPaddle);
     clearInterval(mvBallInterval);
     startGame = false;
+  }
 }
 
 function heartDisplay() {
@@ -160,9 +189,10 @@ function makeBricks(){
                 bricks[i][j] = { x: 0, y: 0, on: 'yes', health: 0}
                 bricks[i][j].x = i * (width + spaceX);
                 bricks[i][j].y = j * (height + spaceY);
-		if (j == 0) { bricks[i][j].health = 1;}
-		if (j == 1) { bricks[i][j].health = 1;}
+		if (j == 0) { bricks[i][j].health = 3;}
+		if (j == 1) { bricks[i][j].health = 2;}
 		if (j == 2) { bricks[i][j].health = 1;}	//3 NEEDS TO BE CHANGED TO 1
+		if (test == 1) { bricks[i][j].health = 1;} 
 	        healthTotal = healthTotal + bricks[i][j].health;
 	        console.log(healthTotal);
             }
@@ -176,9 +206,9 @@ function makeBricks(){
                 bricks[i][j] = { x: 0, y: 0, on: 'yes'}
                 bricks[i][j].x = i * (width + spaceX);
                 bricks[i][j].y = j * (height + spaceY);
-		if (j == 0) { bricks[i][j].health = 1;}
-		if (j == 1) { bricks[i][j].health = 1;}
-		if (j == 2) { bricks[i][j].health = 1;}
+		if (j == 0) { bricks[i][j].health = 4;}
+		if (j == 1) { bricks[i][j].health = 3;}
+		if (j == 2) { bricks[i][j].health = 2;}
 		if (j == 3) { bricks[i][j].health = 1;}
 	        healthTotal = healthTotal + bricks[i][j].health;
 	        console.log(healthTotal);
@@ -227,14 +257,14 @@ function hitDetect(){
                     updateScoreBoard(score);
                     bricks[i][j].health--;
                     dy= -dy;
-                    if(bricks[i][j].health < 1) {
+                    if(bricks[i][j].health == 0) {
                             context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                             bricks[i][j].on = 'no';
                     } 
                     if(score == healthTotal && level == 1){
                         level = 2;
                         score = 0;
-			            healthTotal = 0;
+			healthTotal = 0;
                         x = 750;
                         y = 500;
                         dy = -dy
@@ -277,6 +307,7 @@ function hitDetect(){
 
 function drawPaddle() {
   let posR = posPaddle;
+  if(test == 1) {posR = 950;} //ADDED FOR TESTING
   if(posR => wallLeftPos && posR <= wallRightPos) { //Paddle movements within the game border 
     context.beginPath();
     context.fillStyle = 'Blue';
@@ -304,7 +335,8 @@ function drawPaddle() {
 }
 
 function hitPaddle() {
-  if((y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
+  if((test == 1) && (y <= 552) && (y >= 550) && (x > 700)) {dy= -dy;} //ADDED FOR TESTING
+  else if((test == 0) &&(y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
     console.log("paddleHit");
     dy = -dy;
   }
@@ -362,7 +394,7 @@ function reset() {
 	width = 200;
 	height = 50;
 	bricks = []
-	brickTotal = row*col; //Using for if all bricks are destroyed
+	brickTotal = row*col; //Using for if all bricks are destroyed NEED TO CHANGE THIS
 	spaceX = 5
 	spaceY = 5
 	score = 0;
