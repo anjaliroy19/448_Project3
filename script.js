@@ -94,19 +94,22 @@ function moveBall(){
   } 
   else {
     test = 1;
-    setDxDy();
-    drawBall(x,y);
-    drawPaddle();
-    row = 1;
-    col = 3;
-    drawBricks();
-    hitDetect();
-    x = x + dx;
-    y = y + dy;
+    if(lives == 3) {
+      setDxDy();
+      drawBall(500,y);
+      drawPaddle();
+      row = 1;
+      col = 5;
+      drawBricks();
+      hitDetect();
+      y = y + dy;
+      if(initialBall == true) {x= x + dx;}
+    }
     if(lives == 2) {
       test = 1;
       setDxDy();
-      drawBall(x,y);
+      drawPaddle();
+      drawBall(600,y);
       drawBricks();
       hitDetect();
       x = x + dx;
@@ -115,7 +118,7 @@ function moveBall(){
     if(lives == 1) {
       test = 1;
       setDxDy();
-      drawBall(x,y);
+      drawBall(700,y);
       drawPaddle();
 
       drawBricks();
@@ -180,7 +183,7 @@ function softReset() {
     initialBall = false;
     dx=Math.abs(dx);
     dy= 1*(Math.abs(dy));
-    x = Math.floor((Math.random() * 1000) + 200);;
+    x = Math.floor((Math.random() * 1000) + 200);
     y = 300;
     posPaddle = x;
     drawBall(x,300);
@@ -270,7 +273,7 @@ function drawBricks(){
         for(let i = 0; i < col; i++){
             for(let j = 0; j < row; j++){	//1 NEEDS TO BE CHANGED TO ROW
                 if(bricks[i][j].on == 'yes'){
-                    context.beginPath();
+                    context.beginPath(); //ADD IF STATEMENTS FOR HEALTH LEVELS, GREY IS 3 HEALTH, YELLOW IS 2 HEALTH, RED IS 1 HEALTH
                     context.fillStyle = "gray";
                     context.rect(bricks[i][j].x, bricks[i][j].y, width, height);
                     context.closePath(); 
@@ -300,11 +303,11 @@ function hitDetect(){
         for(let i = 0; i < col; i++){
             for(let j = 0; j < row; j++){
                 if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height && bricks[i][j].on == 'yes'){
-                    console.log('hit')
+                    console.log('hit');
                     score++;
                     updateScoreBoard(score);
                     bricks[i][j].health--;
-                    dy= -dy;
+                    dy= -dy;		//HEALTH COLOR CHANGE
                     if(bricks[i][j].health < 1) {
                             context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                             bricks[i][j].on = 'no';
@@ -355,7 +358,7 @@ function hitDetect(){
 
 function drawPaddle() {
   let posR = posPaddle;
-  if(test == 1) {posR =1320;}
+  if(test == 1) {posR = 500;}
   if (posR => 50 && posR <= wallRightPos-wallLeftPos-50) { //Paddle movements within the game border 
     context.beginPath();
     context.fillStyle = 'Blue';
@@ -383,8 +386,11 @@ function drawPaddle() {
 }
 
 function hitPaddle() {
-  if((test == 1) && (y <= 552) && (y >= 550) && (x > 1300)) {dy= -dy;} //ADDED FOR TESTING
-  if((y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
+  if((test == 1) && (y <= 552) && (y >= 550) && (x => 450) && (x <= 550)) {
+    dy= -dy;
+    inititalBall = true;
+  } //ADDED FOR TESTING
+  else if((y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
     console.log("paddleHit");
     dy = -dy;
     initialBall = true;
