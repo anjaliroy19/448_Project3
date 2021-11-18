@@ -275,6 +275,16 @@ function drawBricks(){
                 if(bricks[i][j].on == 'yes'){
                     context.beginPath(); //ADD IF STATEMENTS FOR HEALTH LEVELS, GREY IS 3 HEALTH, YELLOW IS 2 HEALTH, RED IS 1 HEALTH
                     context.fillStyle = "gray";
+                    context.beginPath();
+                    if(bricks[i][j].health == 1){
+                        context.fillStyle = "orange";
+                    }
+                    else if (bricks[i][j].health == 2){
+                        context.fillStyle = "magenta";
+                    }
+                    else{
+                        context.fillStyle = "blue";
+                    }
                     context.rect(bricks[i][j].x, bricks[i][j].y, width, height);
                     context.closePath(); 
                     context.fill(); 
