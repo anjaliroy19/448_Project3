@@ -35,14 +35,20 @@ document.getElementById("projectCanvas").addEventListener("click", start);
 
 document.getElementById("testBtn").addEventListener("click", setupTest);
 
+/*
+* @pre none
+* @post sets up display screen and generates a random ball and paddle x position
+* @param none
+* @return none
+*/
 function setup(){
-    x = Math.floor((Math.random() * 1000) + 200);
+    x = Math.floor((Math.random() * 1000) + 200);//random x position between 200 and 1000
     drawBall(x,300);
     makeBricks();
     drawBricks();
-    posPaddle = x;
-    drawPaddle(posPaddle);
-    let btn1 = document.getElementById('btn1x');
+    posPaddle = x; //so that the ball and paddle are aligned
+    drawPaddle(posPaddle); 
+    let btn1 = document.getElementById('btn1x'); //initializes game with 1x button chosen
     btn1.style.fontSize = "25px";
 }
 
@@ -59,23 +65,35 @@ function setupTest(){
   }
 }
 
+/*
+* @pre canvas is clicked on
+* @post calls moveball on loop
+* @param none
+* @return none
+*/
 function start(){
     if (startGame == false) {
-      y = 300;//^^
+      y = 300;//so that ball starts above paddle
       startGame = true;
       mvBallInterval = setInterval(moveBall,5); //calls gameLoop() every 5 ms
     }
 }
 
+/*
+* @pre start game
+* @post checks for hits and calls draws ball, paddle, and bricks
+* @param one
+* @return none
+*/
 function moveBall(){
-  if (test == 0){
+  if (test == 0){//regular game playing
     setDxDy();
     drawBall(x,y);
     drawPaddle(posPaddle);
     drawBricks();
     hitDetect();
     y = y + dy;
-    if(initialBall == true){
+    if(initialBall == true){//so that the ball falls vertically at first until it hits paddle
         x = x + dx;
     }
   } 
@@ -97,15 +115,29 @@ function moveBall(){
   }
 }
 //https://github.com/anjaliroy19/448_Project3.git
+
+
+/*
+* @pre none
+* @post clears screen and redraws ball
+* @param none
+* @return none
+*/
 function drawBall(posX, posY){
     context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
     context.beginPath();
     context.fillStyle="#FF0000";
-    context.arc(posX,posY,10,0, Math.PI*2, true);
+    context.arc(posX,posY,10,0, Math.PI*2, true);//radius of 10
     context.closePath();
     context.fill();
 }
 
+/*
+* @pre none
+* @post checks ball x and y position to set dx and dy 
+* @param none
+* @return none
+*/
 function setDxDy(){
     //change dx and dy after hitting a wall, block, and paddle
     if (x <= 10 || x >= (wallRightPos-wallLeftPos) -10){ //checks if edge of ball is within canvas
@@ -114,10 +146,10 @@ function setDxDy(){
     if (y <= 10 || y > 700){ //made a bottom border for testing - remove when adding paddle
         dy = -dy;
     }
-    if (y > 700){
+    if (y > 700){//check for ball below paddle
         lives--;
         heartDisplay();
-        if (!(lives <= 0)) {
+        if (!(lives <= 0)) {//softResets screen if user has lives left
         	softReset();
         }
     }
@@ -165,9 +197,15 @@ function heartDisplay() {
 	return;
 }
 
+/*
+* @pre all lives are lost or score = 28
+* @post alerts game over for a win or score
+* @param none
+* @return none
+*/
 function gameOver(){
     //later add an image
-    if (score == 28){
+    if (score == 28){//when second level is beat
         window.alert("Congratulations! You beat the game!");
     }
     else{
@@ -337,7 +375,12 @@ function hitPaddle() {
 
 }
 
-//called on speed button click
+/*
+* @pre speed button is clicked
+* @post changes ball speed based on button click
+* @param none
+* @return none
+*/
 function btnSpeed(id, id2, id3){
     let btn1 = document.getElementById(id);
     btn1.style.fontSize = "25px";
@@ -361,6 +404,12 @@ function btnSpeed(id, id2, id3){
 }
 
 
+/*
+* @pre brick is hit
+* @post updates scoreboard
+* @param none
+* @return none
+*/
 function updateScoreBoard(score){
 	document.getElementById("score").innerHTML = "Score: " + score;
 }
