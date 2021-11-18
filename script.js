@@ -58,10 +58,12 @@ function setupTest(){
   test = 1;
   row = 1;
   col = 5;
-  drawBall(510,300);
+  x = 510;
+  y = 300;
+  drawBall(x,y);
   makeBricks();
   drawBricks();
-  posPaddle = 550;
+  posPaddle = x;
   drawPaddle();
   mvBallInterval = setInterval(moveBall,5);
   
@@ -102,7 +104,7 @@ function moveBall(){
   else if(test == 1) {
     if(lives == 3) {
       setDxDy();
-      drawBall(510,y);
+      drawBall(x,y);
       drawPaddle();
       row = 1;
       col = 5;
@@ -452,13 +454,13 @@ function drawPaddle() {
 */
 function hitPaddle() {
   //console.log(posPaddle);
-  if((test == 1) && (y <= 552) && (y >= 550) && (posPaddle => 450) && (posPaddle <= 550)) { //ISNT CALLING THIS IF DURING TESTING
-    console.log("testPaddle hit");
-    dy= -dy;
-    initialBall = true;
-  } //ADDED FOR TESTING
-  else if((test != 1) && (y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
-    console.log("paddleHit");
+  if((y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
+    if(test ==1){
+        console.log("test paddle hit");
+    }
+    else{
+        console.log("paddleHit");
+    }
     dy = -dy;
     initialBall = true;
   }
