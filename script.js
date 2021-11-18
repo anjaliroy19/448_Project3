@@ -319,11 +319,10 @@ function drawBricks(){
                 if(bricks[i][j].on == 'yes'){
                     context.beginPath();
                     if(bricks[i][j].health == 1){
-<<<<<<< HEAD
                         context.fillStyle = "orange";
                     }
                     else if (bricks[i][j].health == 2){
-=======
+
                         context.fillStyle = "yellow";
                     }
                     else if (bricks[i][j].health == 2){
@@ -333,7 +332,6 @@ function drawBricks(){
                         context.fillStyle = "#6666ff";
                     }
                     else if (bricks[i][j].health == 4){
->>>>>>> 7a04948af61ff009612c06e5dbe3634a7662b271
                         context.fillStyle = "magenta";
                     }
                     else if (bricks[i][j].health == 3){
