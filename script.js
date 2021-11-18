@@ -293,7 +293,15 @@ function drawBricks(){
             for(let j = 0; j < row + 1; j++){
                 if(bricks[i][j].on == 'yes'){
                     context.beginPath();
-                    context.fillStyle = "green";
+                    if(bricks[i][j].health == 1){
+                        context.fillStyle = "#ccff33";
+                    }
+                    else if (bricks[i][j].health == 2){
+                        context.fillStyle = "orange";
+                    }
+                    else{
+                        context.fillStyle = "blue#6666ff";
+                    }
                     context.rect(bricks[i][j].x, bricks[i][j].y, width - 20, height - 20);
                     context.closePath(); 
                     context.fill(); 
