@@ -304,8 +304,11 @@ function drawBricks(){
                     else if (bricks[i][j].health == 2){
                         context.fillStyle = "orange";
                     }
-                    else{
+                    else if (bricks[i][j].health == 2){
                         context.fillStyle = "blue#6666ff";
+                    }
+                    else{
+                        context.fillStyle = "magenta"
                     }
                     context.rect(bricks[i][j].x, bricks[i][j].y, width - 20, height - 20);
                     context.closePath(); 
