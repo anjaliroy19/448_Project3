@@ -16,7 +16,7 @@ let bricks = [];
 let spaceX = 5;
 let spaceY = 5;
 let score = 0;
-let level = 1;
+let level = 2;
 let startGame = false;
 let testing = false;
 let lives = 3;
@@ -309,16 +309,16 @@ function drawBricks(){
                 if(bricks[i][j].on == 'yes'){
                     context.beginPath();
                     if(bricks[i][j].health == 1){
-                        context.fillStyle = "#ccff33";
+                        context.fillStyle = "yellow";
                     }
                     else if (bricks[i][j].health == 2){
                         context.fillStyle = "orange";
                     }
-                    else if (bricks[i][j].health == 2){
-                        context.fillStyle = "blue#6666ff";
+                    else if (bricks[i][j].health == 3){
+                        context.fillStyle = "#6666ff";
                     }
-                    else{
-                        context.fillStyle = "magenta"
+                    else if (bricks[i][j].health == 4){
+                        context.fillStyle = "magenta";
                     }
                     context.rect(bricks[i][j].x, bricks[i][j].y, width - 20, height - 20);
                     context.closePath(); 
