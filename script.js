@@ -2,7 +2,7 @@ let canvas;
 var context;
 var x;
 var y;
-var dx=0.7;
+var dx=1;
 var dy=1.2;
 let wallLeftPos; //absolute position of left wall of canvas, not relative to canvas
 let wallRightPos; //absolute position of right wall of canvas, not relative to canvas
@@ -55,11 +55,20 @@ function setup(){
 }
 
 function setupTest(){
+    healthTotal = 0;
   test = 1;
   row = 1;
   col = 5;
-  x = 510;
   y = 300;
+    if (lives ==3){
+        x = 510;
+    }
+    else if (lives == 2){
+        x = 610;
+    }
+    else if (lives == 1){
+        x = 710;
+    }
   drawBall(x,y);
   makeBricks();
   drawBricks();
@@ -90,24 +99,24 @@ function start(){
 * @return none
 */
 function moveBall(){
-  if (test == 0){//regular game playing
     setDxDy();
     drawBall(x,y);
+    if (test == 1){
+        posPaddle = x;
+    }
     drawPaddle();
     drawBricks();
     hitDetect();
     y = y + dy;
     if(initialBall == true){//so that the ball falls vertically at first until it hits paddle
         x = x + dx;
-    }
-  } 
-  else if(test == 1) {
+    } 
+  /*else if(test == 1) {
     if(lives == 3) {
       setDxDy();
       drawBall(x,y);
       drawPaddle();
-      row = 1;
-      col = 5;
+      d
       drawBricks();
       hitDetect();
       y = y + dy;
@@ -135,8 +144,8 @@ function moveBall(){
       //setDxDy();
       //drawBall(x,y); 
       
-    }
-  }
+    }*/
+  
 }
 //https://github.com/anjaliroy19/448_Project3.git
 
@@ -187,16 +196,19 @@ function setDxDy(){
 * @return none
 */
 function softReset() {
-    initialBall = false;
-    dx=Math.abs(dx);
-    dy= 1*(Math.abs(dy));
-    x = Math.floor((Math.random() * 1000) + 200);
-    y = 300;
-    posPaddle = x;
-    drawBall(x,300);
-    drawPaddle();
-    clearInterval(mvBallInterval);
-    startGame = false;
+
+        initialBall = false;
+        dx=Math.abs(dx);
+        dy= 1*(Math.abs(dy));
+        x = Math.floor((Math.random() * 1000) + 200);
+        y = 300;
+        posPaddle = x;
+        drawBall(x,y);
+        drawPaddle();
+        clearInterval(mvBallInterval);
+        startGame = false;
+
+    
 }
 
 
@@ -229,7 +241,7 @@ function heartDisplay() {
 */
 function gameOver(){
     //later add an image
-    if (score == 28){//when second level is beat
+    if (score == healthTotal){//when second level is beat
         window.alert("Congratulations! You beat the game!");
     }
     else{
@@ -260,7 +272,9 @@ function makeBricks(){
 		if ((j == 0) && (test != 1)) { bricks[i][j].health = 3;}
 		else if ((j == 1) && (test != 1)) { bricks[i][j].health = 2;}
 		else if ((j == 2) && (test != 1)) { bricks[i][j].health = 1;}	//3 NEEDS TO BE CHANGED TO 1
-		else if (test == 1) { bricks[i][j].health = 1;}
+		else if (test == 1) { 
+            bricks[i][j].health = 1;
+        }
 	        healthTotal = healthTotal + bricks[i][j].health;
 	        console.log(healthTotal);
             }
@@ -403,7 +417,7 @@ function hitDetect(){
                             context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                             bricks[i][j].on = 'no';
                     }
-            	    if(score == 70) {
+            	    if(score == healthTotal) {
                         gameOver();
                     } //If equal all bricks are destroyed.
                         //need to remove bricks from array
@@ -420,7 +434,6 @@ function hitDetect(){
 */
 function drawPaddle() {
   let posR = posPaddle;
-  if(test == 1) {posPaddle = 500;}
   if (posR => 50 && posR <= wallRightPos-wallLeftPos-50) { //Paddle movements within the game border 
     context.beginPath();
     context.fillStyle = 'Blue';
@@ -486,12 +499,12 @@ function btnSpeed(id, id2, id3){
         dy = 1*dy/(Math.abs(dy));
     }
     else if (id == 'btn2x'){
-        dx = 1*dx/(Math.abs(dx));
-        dy = 2*dy/(Math.abs(dy));
-    }
-    else if (id == 'btn3x'){
         dx = 1.5*dx/(Math.abs(dx));
         dy = 3*dy/(Math.abs(dy));
+    }
+    else if (id == 'btn3x'){
+        dx = 2*dx/(Math.abs(dx));
+        dy = 4*dy/(Math.abs(dy));
     }
 }
 
