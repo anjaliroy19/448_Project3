@@ -2,8 +2,8 @@ let canvas;
 var context;
 var x;
 var y;
-var dx=0.7;
-var dy=1.2;
+var dx=1.2;
+var dy=-1.2;
 let wallLeftPos; //absolute position of left wall of canvas, not relative to canvas
 let wallRightPos; //absolute position of right wall of canvas, not relative to canvas
 let wallTopPos;
@@ -102,7 +102,7 @@ function moveBall(){
     hitDetect();
     y = y + dy;
     if(initialBall == true){//so that the ball falls vertically at first until it hits paddle
-        x = x + dx;
+      x = x + dx;
     }
   } 
   else {
