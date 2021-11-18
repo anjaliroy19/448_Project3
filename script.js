@@ -49,15 +49,22 @@ function setup(){
     makeBricks();
     drawBricks();
     posPaddle = x; //so that the ball and paddle are aligned
-    drawPaddle(posPaddle); 
+    drawPaddle(); 
     let btn1 = document.getElementById('btn1x'); //initializes game with 1x button chosen
     btn1.style.fontSize = "25px";
 }
 
 function setupTest(){
   test = 1;
+  row = 1;
+  col = 5;
+  drawBall(510,300);
+  makeBricks();
+  drawBricks();
+  posPaddle = 550;
+  drawPaddle();
   mvBallInterval = setInterval(moveBall,5);
-
+  
 }
 
 /*
@@ -84,7 +91,7 @@ function moveBall(){
   if (test == 0){//regular game playing
     setDxDy();
     drawBall(x,y);
-    drawPaddle(posPaddle);
+    drawPaddle();
     drawBricks();
     hitDetect();
     y = y + dy;
@@ -92,39 +99,37 @@ function moveBall(){
         x = x + dx;
     }
   } 
-  else {
-    test = 1;
+  else if(test == 1) {
     if(lives == 3) {
       setDxDy();
-      drawBall(500,y);
+      drawBall(510,y);
       drawPaddle();
       row = 1;
       col = 5;
       drawBricks();
       hitDetect();
       y = y + dy;
-      if(initialBall == true) {x= x + dx;}
+      if(initialBall == true) {x = x + dx;}
     }
     if(lives == 2) {
       test = 1;
       setDxDy();
+      drawBall(610,y);
       drawPaddle();
-      drawBall(600,y);
       drawBricks();
       hitDetect();
-      x = x + dx;
       y = y + dy;
+      if(initialBall == true) {x= x + dx;}
     }
     if(lives == 1) {
       test = 1;
       setDxDy();
-      drawBall(700,y);
+      drawBall(710,y);
       drawPaddle();
-
       drawBricks();
       hitDetect();
-      x = x + dx;
       y = y + dy;
+      if(initialBall == true) {x= x + dx;}
       //setDxDy();
       //drawBall(x,y); 
       
@@ -187,7 +192,7 @@ function softReset() {
     y = 300;
     posPaddle = x;
     drawBall(x,300);
-    drawPaddle(posPaddle);
+    drawPaddle();
     clearInterval(mvBallInterval);
     startGame = false;
 }
@@ -233,6 +238,11 @@ function gameOver(){
 
 
 function makeBricks(){
+    if(test == 1) {
+      row =1;
+      col = 5;
+      console.log("test: " + test + "row: " + row + "col: " + col);
+    }
     if(level == 1){
         for(let i = 0; i < col; i++){
             bricks[i] = [];
@@ -240,10 +250,10 @@ function makeBricks(){
                 bricks[i][j] = { x: 0, y: 0, on: 'yes', health: 0}
                 bricks[i][j].x = i * (width + spaceX);
                 bricks[i][j].y = j * (height + spaceY);
-		if (j == 0) { bricks[i][j].health = 3;}
-		if (j == 1) { bricks[i][j].health = 2;}
-		if (j == 2) { bricks[i][j].health = 1;}	//3 NEEDS TO BE CHANGED TO 1
-		if (test == 1) { bricks[i][j].health = 1;}
+		if ((j == 0) && (test != 1)) { bricks[i][j].health = 3;}
+		else if ((j == 1) && (test != 1)) { bricks[i][j].health = 2;}
+		else if ((j == 2) && (test != 1)) { bricks[i][j].health = 1;}	//3 NEEDS TO BE CHANGED TO 1
+		else if (test == 1) { bricks[i][j].health = 1;}
 	        healthTotal = healthTotal + bricks[i][j].health;
 	        console.log(healthTotal);
             }
@@ -299,14 +309,16 @@ function drawBricks(){
                 if(bricks[i][j].on == 'yes'){
                     context.beginPath();
                     if(bricks[i][j].health == 1){
-                        context.fillStyle = "#ccff33";
-                    }
-                    else if (bricks[i][j].health == 2){
                         context.fillStyle = "orange";
                     }
-                    else{
-                        context.fillStyle = "blue#6666ff";
+                    else if (bricks[i][j].health == 2){
+                        context.fillStyle = "magenta";
                     }
+                    else if (bricks[i][j].health == 3){
+                        context.fillStyle = "blue";
+                    } else {
+		      context.fillStyle = "green";
+		    }
                     context.rect(bricks[i][j].x, bricks[i][j].y, width - 20, height - 20);
                     context.closePath(); 
                     context.fill(); 
@@ -325,7 +337,7 @@ function hitDetect(){
                     score++;
                     updateScoreBoard(score);
                     bricks[i][j].health--;
-                    dy= -dy;		//HEALTH COLOR CHANGE
+                    dy= -dy;		
                     if(bricks[i][j].health < 1) {
                             context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                             bricks[i][j].on = 'no';
@@ -355,16 +367,16 @@ function hitDetect(){
         for(let i = 0; i < col + 1; i++){
             for(let j = 0; j < row + 1; j++){
                 if(x > bricks[i][j].x && x < bricks[i][j].x + width && y > bricks[i][j].y && y < bricks[i][j].y + height && bricks[i][j].on == 'yes'){
-                    console.log('hit')
+                    console.log('hit');
                     score++;
                     bricks[i][j].health--;
                     updateScoreBoard(score);
-		            dy = -dy;
+		    dy = -dy;
                     if(bricks[i][j].health < 1) {
                             context.clearRect(0,0, 2000, 2000); //this may need to be changed depending on the defined canvas width and height
                             bricks[i][j].on = 'no';
                     }
-            	    if(score == healthTotal) {
+            	    if(score == 70) {
                         gameOver();
                     } //If equal all bricks are destroyed.
                         //need to remove bricks from array
@@ -376,7 +388,7 @@ function hitDetect(){
 
 function drawPaddle() {
   let posR = posPaddle;
-  if(test == 1) {posR = 500;}
+  if(test == 1) {posPaddle = 500;}
   if (posR => 50 && posR <= wallRightPos-wallLeftPos-50) { //Paddle movements within the game border 
     context.beginPath();
     context.fillStyle = 'Blue';
@@ -404,11 +416,13 @@ function drawPaddle() {
 }
 
 function hitPaddle() {
-  if((test == 1) && (y <= 552) && (y >= 550) && (x => 450) && (x <= 550)) {
+  //console.log(posPaddle);
+  if((test == 1) && (y <= 552) && (y >= 550) && (posPaddle => 450) && (posPaddle <= 550)) { //ISNT CALLING THIS IF DURING TESTING
+    console.log("testPaddle hit");
     dy= -dy;
-    inititalBall = true;
+    initialBall = true;
   } //ADDED FOR TESTING
-  else if((y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
+  else if((test != 1) && (y >= 550 && y <= 552) && (x > posPaddle-50) && (x < posPaddle+50)) { //The Y value can be changed to whatever in the final project.
     console.log("paddleHit");
     dy = -dy;
     initialBall = true;
@@ -492,12 +506,12 @@ function reset() {
 	score = 0;
 	level = 1;
 	startGame = false;
-    testing = true;
+        testing = true;
 	lives = 3;
     drawBall(750,300);
     makeBricks();
     drawBricks();
-    drawPaddle(posPaddle);
+   // drawPaddle(posPaddle);
     clearInterval(mvBallInterval);
     document.getElementsByClassName("test").style.display("initial");
 }
