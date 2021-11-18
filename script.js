@@ -231,7 +231,12 @@ function gameOver(){
     location.reload();
 }
 
-
+/*
+* @pre none
+* @post bricks array is made and bricks are given a position, health, and on status
+* @param none
+* @return none
+*/
 function makeBricks(){
     if(level == 1){
         for(let i = 0; i < col; i++){
@@ -267,7 +272,12 @@ function makeBricks(){
         }
     }
 }
-
+/*
+* @pre bricks array must be created
+* @post bricks are drawn to the screen
+* @param none
+* @return none
+*/
 function drawBricks(){
     if(level == 1){
         for(let i = 0; i < col; i++){
@@ -318,7 +328,12 @@ function drawBricks(){
         }
     }
 }
-
+/*
+* @pre none
+* @post reduces brick health, updates score board, alerts user of loss or level pass
+* @param none
+* @return none
+*/
 function hitDetect(){
     if(level == 1){
         for(let i = 0; i < col; i++){
@@ -405,7 +420,12 @@ function drawPaddle() {
   }
     hitPaddle();
 }
-
+/*
+* @pre none
+* @post if ball hits paddle dy is changed so that ball bounces off paddle
+* @param none
+* @return none
+*/
 function hitPaddle() {
   if((test == 1) && (y <= 552) && (y >= 550) && (x => 450) && (x <= 550)) {
     dy= -dy;
