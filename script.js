@@ -54,17 +54,23 @@ function setup(){
     btn1.style.fontSize = "25px";
 }
 
+/*
+* @pre test button is clicked
+* @post sets up ball and paddle positions for test suite and calls moveball
+* @param none
+* @return none
+*/
 function setupTest(){
 healthTotal = 0;
   test = 1;
-  row = 1;
+  row = 1; //for one row of bricks
   col = 5;
-  y = 300;
+  y = 300;//start above paddle
     if (lives ==3){
         x = 510;
     }
     else if (lives == 2){
-        x = 610;
+        x = 610;//changes x-ball position for test
     }
     else if (lives == 1){
         x = 710;
@@ -102,7 +108,7 @@ function moveBall(){
     setDxDy();
     drawBall(x,y);
     if (test == 1){
-        posPaddle = x;
+        posPaddle = x;//so that the paddle follows the ball for the test suite
     }
     drawPaddle();
     drawBricks();
@@ -162,10 +168,10 @@ function setDxDy(){
 * @return none
 */
 function softReset() {
-        initialBall = false;
+        initialBall = false;//sets initial ball to false so that ball first falls vertically before hitting paddle
         dx=Math.abs(dx);
         dy= 1*(Math.abs(dy));
-        x = Math.floor((Math.random() * 1000) + 200);
+        x = Math.floor((Math.random() * 1000) + 200);//random x position
         y = 300;
         posPaddle = x;
         drawBall(x,y);
@@ -247,7 +253,7 @@ function makeBricks(){
         }
     }
     else if(level == 2){
-	healthTotal = 0;
+	healthTotal = 0;//reset health total
         for(let i = 0; i < col + 1; i++){
             bricks[i] = [];
             for(let j = 0; j < row + 1; j++){
